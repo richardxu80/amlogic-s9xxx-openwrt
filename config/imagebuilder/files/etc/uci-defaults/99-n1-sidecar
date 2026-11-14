@@ -1,17 +1,17 @@
 #!/bin/sh
-# N1 旁路由默认配置：首次启动兜底（幂等，只跑一次）
+# N1 单臂旁路由默认值（幂等，只跑一次）
 uci set system.@system[0].hostname='N1'
-uci set network.lan.ipaddr='192.168.7.1'
-uci set network.lan.netmask='255.255.255.0'
+uci set firewall.@zone[0].name='wan'
+uci set firewall.@zone[0].input='ACCEPT'
+uci set firewall.@zone[0].output='ACCEPT'
+uci set firewall.@zone[0].forward='ACCEPT'
+uci set firewall.@zone[0].masq='1'
 uci set dhcp.lan.ignore='1'
-uci set firewall.@zone[1].input='ACCEPT'
-uci set firewall.@zone[1].forward='ACCEPT'
-uci set firewall.@zone[1].masq='1'
+uci set dhcp.wan.ignore='1'
 uci commit system
-uci commit network
-uci commit dhcp
 uci commit firewall
+uci commit dhcp
 /etc/init.d/network reload >/dev/null 2>&1
 /etc/init.d/firewall reload >/dev/null 2>&1
-logger -t n1-defaults "N1 sidecar defaults applied: lan=192.168.7.1, wan=dhcp(input ACCEPT)"
+logger -t n1-defaults "N1 single-arm WAN-only defaults applied (wan=dhcp, firewall WAN fully open)"
 exit 0
