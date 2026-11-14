@@ -11,7 +11,10 @@ uci set dhcp.wan.ignore='1'
 uci commit system
 uci commit firewall
 uci commit dhcp
+# 让 passwall2 安装脚本可直接执行
+[ -f /root/pw2-install.sh ] && chmod +x /root/pw2-install.sh
+[ -f /root/pw2-install.sh ] && ln -sf /root/pw2-install.sh /usr/bin/pw2-install
 /etc/init.d/network reload >/dev/null 2>&1
 /etc/init.d/firewall reload >/dev/null 2>&1
-logger -t n1-defaults "N1 single-arm WAN-only defaults applied (wan=dhcp, firewall WAN fully open)"
+logger -t n1-defaults "N1 defaults applied: wan=dhcp, firewall WAN open, pw2-install ready"
 exit 0
