@@ -208,6 +208,7 @@ rebuild_firmware() {
         liblucihttp liblucihttp-lua \
         blkid block-mount blockd e2fsprogs fdisk losetup lsblk mount-utils \
         parted resize2fs tune2fs curl gzip tar unzip \
+        jq ttyd luci-app-ttyd luci-i18n-ttyd-zh-cn zoneinfo-core zoneinfo-asia \
         \
         luci luci-base luci-compat luci-i18n-base-zh-cn luci-lib-base \
         luci-lib-ip luci-lib-ipkg luci-lib-jsonc luci-lib-nixio luci-mod-admin-full \
