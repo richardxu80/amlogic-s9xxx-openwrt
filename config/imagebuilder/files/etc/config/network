@@ -1,0 +1,25 @@
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	list ipaddr '127.0.0.1/8'
+
+config globals 'globals'
+	option ula_prefix 'auto'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0'
+
+# 管理网段：静态 192.168.7.1/24（旁路由自身管理地址）
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	list ipaddr '192.168.7.1/24'
+	option delegate '0'
+
+# 上联：同一物理网口向主路由要地址，负责出网与远程管理
+config interface 'wan'
+	option device 'br-lan'
+	option proto 'dhcp'
+	option delegate '0'
